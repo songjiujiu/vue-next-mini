@@ -16,3 +16,4 @@ release: 发布新版本
 workflow: 工作流相关文件修改
 # 关闭代理
 git config --global --unset http.proxy
+git config --global http.proxy http://127.0.0.1:7890
