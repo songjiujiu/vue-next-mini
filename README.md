@@ -14,3 +14,5 @@ ci: 持续集成相关文件修改
 chore: 其他修改（不在上述类型中的修改）
 release: 发布新版本
 workflow: 工作流相关文件修改
+# 关闭代理
+git config --global --unset http.proxy
