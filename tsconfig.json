@@ -17,6 +17,13 @@
       "esnext",
       "dom"
     ],
+    // 设置快捷导入
+    "baseUrl": ".",
+    "paths": {
+      "@vue/*":[
+        "packages/*/src"
+      ]
+    }
   },
   "include": [
     "packages/*/src",

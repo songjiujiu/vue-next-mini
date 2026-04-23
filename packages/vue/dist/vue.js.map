@@ -1,1 +1,1 @@
-{"version":3,"file":"vue.js","sources":[],"sourcesContent":[],"names":[],"mappings":";;;;;;;"}
+{"version":3,"file":"vue.js","sources":["../src/index.ts"],"sourcesContent":["import { isArray } from \"@vue/shared/src\";\r\nconsole.log(isArray([]))"],"names":["isArray"],"mappings":";;;CACA,OAAO,CAAC,GAAG,CAACA,WAAO,CAAC,EAAE,CAAC;;;;;;"}
