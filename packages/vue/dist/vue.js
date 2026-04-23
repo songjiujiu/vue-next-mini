@@ -1,7 +1,27 @@
-(function (src) {
-	'use strict';
+var Vue = (function (exports) {
+    'use strict';
 
-	console.log(src.isArray([]));
+    var mutableHandlers = {};
 
-})(src);
+    var reactiveMap = new WeakMap();
+    function reactive(target) {
+        return createReactiveObject(target, mutableHandlers, reactiveMap);
+    }
+    function createReactiveObject(target, baseHandlers, proxyMap) {
+        var existingProxy = proxyMap.get(target);
+        if (existingProxy) {
+            return existingProxy;
+        }
+        var proxy = new Proxy(target, baseHandlers);
+        proxyMap.set(target, proxy);
+        return proxy;
+    }
+
+    exports.reactive = reactive;
+
+    Object.defineProperty(exports, '__esModule', { value: true });
+
+    return exports;
+
+})({});
 //# sourceMappingURL=vue.js.map

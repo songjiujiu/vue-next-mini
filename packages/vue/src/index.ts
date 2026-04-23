@@ -1,2 +1,1 @@
-import { isArray } from "@vue/shared/src";
-console.log(isArray([]))
+export {reactive} from '@vue/reactivity'
