@@ -1,4 +1,4 @@
-type KeyToDepMap = Map<any,ReactiveEffect>
+type KeyToDepMap = Map<any,ReactiveEffect> //ReactiveEffect 应该是个数组
 const targetMap = new WeakMap<any,KeyToDepMap>()
 export function effect<T = any>(fn: () => T) {
     const _effect = new ReactiveEffect(fn)
@@ -37,5 +37,13 @@ export function track(target: object, key: unknown) {
  */
 export function trigger(target: object, key: unknown, newValue: unknown) {
     console.log("触发依赖")
-    console.log("watch")
+    const depsMap = targetMap.get(target)
+    if(!depsMap) {
+        return
+    }
+    const effect = depsMap.get(key) as ReactiveEffect
+    if(!effect) {
+        return
+    }
+    effect.fn()
 }

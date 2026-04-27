@@ -43,7 +43,15 @@ var Vue = (function (exports) {
      */
     function trigger(target, key, newValue) {
         console.log("触发依赖");
-        console.log("watch");
+        var depsMap = targetMap.get(target);
+        if (!depsMap) {
+            return;
+        }
+        var effect = depsMap.get(key);
+        if (!effect) {
+            return;
+        }
+        effect.fn();
     }
 
     var get = createGetter();
@@ -58,7 +66,7 @@ var Vue = (function (exports) {
     function createSetter() {
         return function set(target, key, value, receiver) {
             var res = Reflect.get(target, key, receiver);
-            trigger(); //触发依赖
+            trigger(target, key); //触发依赖
             return res;
         };
     }
