@@ -14,12 +14,16 @@
 <script>
     const { reactive, effect } = Vue
     const obj = reactive({
-        name: '张三'
+        name: '张三',
+        age: 18
     })
     console.log(obj.name)
     obj.name = '李四'
     effect(() => {
         document.querySelector('#app').innerText = obj.name
+    })
+    effect(() => {
+        document.querySelector('#app').innerText = obj.age
     })
 </script>
 
