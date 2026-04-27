@@ -17,3 +17,5 @@ workflow: 工作流相关文件修改
 # 关闭代理
 git config --global --unset http.proxy
 git config --global http.proxy http://127.0.0.1:7890
+# 热更新 在 package.json
+添加   "dev": "rollup -c -w", 

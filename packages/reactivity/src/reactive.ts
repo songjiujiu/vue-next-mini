@@ -24,7 +24,7 @@ function createReactiveObject(
 
     const existingProxy = proxyMap.get(target)
     // 👉 先去缓存里查这个对象有没有被代理过
-
+    console.log(existingProxy,"existingProxyexistingProxy")
     if (existingProxy) {
         // 👉 如果已经有 Proxy 了，直接返回（避免重复创建）
         return existingProxy
