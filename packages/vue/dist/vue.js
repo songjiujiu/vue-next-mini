@@ -78,6 +78,7 @@ var Vue = (function (exports) {
         }
         ReactiveEffect.prototype.run = function () {
             activeEffect = this;
+            console.log("函数hi下了");
             return this.fn();
         };
         return ReactiveEffect;
@@ -124,6 +125,7 @@ var Vue = (function (exports) {
         if (!dep) {
             return;
         }
+        console.log("=++++++++++++++++++++++++++++++++++++=");
         triggerEffects(dep);
     }
     /**
@@ -137,6 +139,7 @@ var Vue = (function (exports) {
             //  依次触发依赖
             for (var effects_1 = __values(effects), effects_1_1 = effects_1.next(); !effects_1_1.done; effects_1_1 = effects_1.next()) {
                 var effect_1 = effects_1_1.value;
+                console.log(effect_1, "________-----------------");
                 triggerEffect(effect_1);
             }
         }
@@ -153,6 +156,7 @@ var Vue = (function (exports) {
      * @param effect
      */
     function triggerEffect(effect) {
+        console.log("+++++++++++++++++++++++++++++++++++++=================");
         effect.run();
     }
 
@@ -167,7 +171,8 @@ var Vue = (function (exports) {
     var set = createSetter();
     function createSetter() {
         return function set(target, key, value, receiver) {
-            var res = Reflect.get(target, key, receiver);
+            var res = Reflect.set(target, key, value, receiver);
+            console.log("==========================================");
             trigger(target, key); //触发依赖
             return res;
         };

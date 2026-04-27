@@ -13,6 +13,7 @@ export class ReactiveEffect<T = any> {
     constructor(public fn: () => T) { }
     run(): T {
         activeEffect = this
+        console.log("函数hi下了")
         return this.fn()
     }
 }
@@ -57,6 +58,7 @@ export function trigger(target: object, key: unknown, newValue: unknown) {
     if (!dep) {
         return
     }
+    console.log("=++++++++++++++++++++++++++++++++++++=")
     triggerEffects(dep)
 }
 /**
@@ -67,6 +69,7 @@ export function triggerEffects(dep: Dep) {
     const effects = isArray(dep) ? dep : [...dep]
     //  依次触发依赖
     for(const effect of effects) {
+        console.log(effect,"________-----------------")
         triggerEffect(effect)
     }
 }
@@ -75,5 +78,6 @@ export function triggerEffects(dep: Dep) {
  * @param effect 
  */
 export function triggerEffect(effect: ReactiveEffect) {
+    console.log("+++++++++++++++++++++++++++++++++++++=================")
     effect.run()
 }

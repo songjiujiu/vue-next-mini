@@ -10,7 +10,8 @@ function createGetter() {
 const set = createSetter()
 function createSetter() {
     return function set(target: object, key: string | symbol, value: unknown, receiver: object) {
-        const res = Reflect.get(target, key,  receiver)
+        const res = Reflect.set(target, key, value, receiver)
+        console.log("==========================================")
         trigger(target, key, value )//触发依赖
         return res
     }
