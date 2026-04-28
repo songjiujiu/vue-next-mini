@@ -78,7 +78,6 @@ var Vue = (function (exports) {
         }
         ReactiveEffect.prototype.run = function () {
             activeEffect = this;
-            console.log("函数hi下了");
             return this.fn();
         };
         return ReactiveEffect;
@@ -89,7 +88,6 @@ var Vue = (function (exports) {
      * @param key
      */
     function track(target, key) {
-        console.log(key, "收集依赖");
         if (!activeEffect)
             return;
         var depsMap = targetMap.get(target);
@@ -116,7 +114,6 @@ var Vue = (function (exports) {
      * @param newValue
      */
     function trigger(target, key, newValue) {
-        console.log("触发依赖");
         var depsMap = targetMap.get(target);
         if (!depsMap) {
             return;
@@ -125,7 +122,6 @@ var Vue = (function (exports) {
         if (!dep) {
             return;
         }
-        console.log("=++++++++++++++++++++++++++++++++++++=");
         triggerEffects(dep);
     }
     /**
@@ -139,7 +135,6 @@ var Vue = (function (exports) {
             //  依次触发依赖
             for (var effects_1 = __values(effects), effects_1_1 = effects_1.next(); !effects_1_1.done; effects_1_1 = effects_1.next()) {
                 var effect_1 = effects_1_1.value;
-                console.log(effect_1, "________-----------------");
                 triggerEffect(effect_1);
             }
         }
@@ -156,7 +151,6 @@ var Vue = (function (exports) {
      * @param effect
      */
     function triggerEffect(effect) {
-        console.log("+++++++++++++++++++++++++++++++++++++=================");
         effect.run();
     }
 
@@ -172,7 +166,6 @@ var Vue = (function (exports) {
     function createSetter() {
         return function set(target, key, value, receiver) {
             var res = Reflect.set(target, key, value, receiver);
-            console.log("==========================================");
             trigger(target, key); //触发依赖
             return res;
         };
@@ -197,8 +190,7 @@ var Vue = (function (exports) {
     function createReactiveObject(target, baseHandlers, proxyMap) {
         // 👉 真正创建响应式对象的核心函数
         var existingProxy = proxyMap.get(target);
-        // 👉 先去缓存里查这个对象有没有被代理过
-        console.log(existingProxy, "existingProxyexistingProxy");
+        // 👉 先去缓存里查这个对象有没有被代理
         if (existingProxy) {
             // 👉 如果已经有 Proxy 了，直接返回（避免重复创建）
             return existingProxy;

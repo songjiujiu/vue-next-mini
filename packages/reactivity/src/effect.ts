@@ -13,7 +13,6 @@ export class ReactiveEffect<T = any> {
     constructor(public fn: () => T) { }
     run(): T {
         activeEffect = this
-        console.log("函数hi下了")
         return this.fn()
     }
 }
@@ -23,7 +22,6 @@ export class ReactiveEffect<T = any> {
  * @param key 
  */
 export function track(target: object, key: unknown) {
-    console.log(key, "收集依赖")
     if (!activeEffect) return
     let depsMap = targetMap.get(target)
     if (!depsMap) {
@@ -49,7 +47,6 @@ export function trackEffects(dep: Dep) {
  * @param newValue 
  */
 export function trigger(target: object, key: unknown, newValue: unknown) {
-    console.log("触发依赖")
     const depsMap = targetMap.get(target)
     if (!depsMap) {
         return
@@ -58,7 +55,6 @@ export function trigger(target: object, key: unknown, newValue: unknown) {
     if (!dep) {
         return
     }
-    console.log("=++++++++++++++++++++++++++++++++++++=")
     triggerEffects(dep)
 }
 /**
@@ -69,7 +65,7 @@ export function triggerEffects(dep: Dep) {
     const effects = isArray(dep) ? dep : [...dep]
     //  依次触发依赖
     for(const effect of effects) {
-        console.log(effect,"________-----------------")
+
         triggerEffect(effect)
     }
 }
@@ -78,6 +74,5 @@ export function triggerEffects(dep: Dep) {
  * @param effect 
  */
 export function triggerEffect(effect: ReactiveEffect) {
-    console.log("+++++++++++++++++++++++++++++++++++++=================")
     effect.run()
 }

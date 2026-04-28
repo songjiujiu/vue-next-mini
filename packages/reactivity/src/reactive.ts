@@ -23,8 +23,7 @@ function createReactiveObject(
     // 👉 真正创建响应式对象的核心函数
 
     const existingProxy = proxyMap.get(target)
-    // 👉 先去缓存里查这个对象有没有被代理过
-    console.log(existingProxy,"existingProxyexistingProxy")
+    // 👉 先去缓存里查这个对象有没有被代理
     if (existingProxy) {
         // 👉 如果已经有 Proxy 了，直接返回（避免重复创建）
         return existingProxy
