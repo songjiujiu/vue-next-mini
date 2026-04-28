@@ -59,6 +59,7 @@ var Vue = (function (exports) {
      * 判断一个 是否是一个数字
      */
     var isArray = Array.isArray;
+    var isObject = function (val) { return val !== null && typeof val === 'object'; };
 
     var createDep = function (effects) {
         var dep = new Set(effects);
@@ -205,9 +206,56 @@ var Vue = (function (exports) {
         return proxy;
         // 👉 返回响应式对象（Proxy）
     }
+    var toReactive = function (value) {
+        return isObject(value) ? reactive(value) : value;
+    };
+
+    function ref(value) {
+        return createRef(value, false);
+    }
+    function createRef(rewValue, shallow) {
+        if (isRef(rewValue)) {
+            return rewValue;
+        }
+        return new RefImpl(rewValue, shallow);
+    }
+    var RefImpl = /** @class */ (function () {
+        function RefImpl(value, __v_isShallow) {
+            this.__v_isShallow = __v_isShallow;
+            this.dep = undefined;
+            this.__v_isRef = true;
+            this._value = __v_isShallow ? value : toReactive(value);
+        }
+        Object.defineProperty(RefImpl.prototype, "value", {
+            get: function () {
+                // 依赖收集
+                trackRefValue(this);
+                return this._value;
+            },
+            set: function (newVal) {
+            },
+            enumerable: false,
+            configurable: true
+        });
+        return RefImpl;
+    }());
+    function trackRefValue(ref) {
+        if (activeEffect) {
+            trackEffects(ref.dep || (ref.dep = createDep()));
+        }
+    }
+    /**
+     * 是否为 ref
+     * @param
+     * @returns
+     */
+    function isRef(r) {
+        return !!(r && r.__v_isRef === true);
+    }
 
     exports.effect = effect;
     exports.reactive = reactive;
+    exports.ref = ref;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

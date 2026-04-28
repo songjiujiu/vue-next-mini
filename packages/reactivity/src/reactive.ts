@@ -1,4 +1,5 @@
 import { mutableHandlers } from "./baseHandlers"
+import { isObject } from "@vue/shared"
 // 👉 导入 Proxy 的“拦截逻辑”（get / set 等都在这里定义）
 
 export const reactiveMap = new WeakMap<object, any>()
@@ -40,4 +41,8 @@ function createReactiveObject(
 
     return proxy
     // 👉 返回响应式对象（Proxy）
+}
+
+export const toReactive = <T extends unknown>(value:T): T  => {
+    return isObject(value) ? reactive(value as object) : value
 }
